@@ -1,0 +1,73 @@
+---
+title: "R Markdown and Plotly"
+author: "Di Zhu"
+date: "2/15/2021"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Instructions
+
+- Create a web page presentation using R Markdown that features a plot created with Plotly. Host your webpage on either GitHub Pages, RPubs, or NeoCities. 
+
+- Your webpage must contain the date that you created the document, and it must contain a plot created with Plotly.
+
+## Review Criteria
+
+- Does the web page feature a date and is this date less than two months before the date that you're grading this assignment?
+
+- Is the web page a presentation and does it feature an interactive plot that appears to have been created with Plotly?
+
+## Set up The Environment
+
+```{r, echo = TRUE, message = FALSE}
+library(quantmod)
+library(dplyr)
+library(tidyr)
+library(plotly)
+```
+
+## Load The Stock Data
+
+```{r, echo = TRUE, message = FALSE, results = 'hide'}
+from.dat <- as.Date("01/01/20", format = "%m/%d/%y")
+to.dat <- as.Date("12/31/20", format = "%m/%d/%y")
+getSymbols("GOOG", src = "yahoo", from = from.dat, to = to.dat)
+getSymbols("TSLA", src = "yahoo", from = from.dat, to = to.dat)
+getSymbols("AAPL", src = "yahoo", from = from.dat, to = to.dat)
+getSymbols("FB", src = "yahoo", from = from.dat, to = to.dat)
+
+stocks = data.frame(goog = GOOG$GOOG.Close, tsla = TSLA$TSLA.Close, 
+                    aapl = AAPL$AAPL.Close, fb = FB$FB.Close)
+date = rownames(stocks)
+stocks = cbind(date = date, stocks)
+rownames(stocks) = 1: nrow(stocks)
+```
+
+## Pivot Data and Create The Plot
+
+```{r, echo = TRUE}
+stocksPivot = stocks %>%
+      rename(GOOG = GOOG.Close, TSLA = TSLA.Close, 
+             AAPL = AAPL.Close, FB = FB.Close) %>%
+      pivot_longer(!date, names_to = 'index', values_to = 'price')
+stocksPivot$date = as.POSIXct(stocksPivot$date)
+
+fig = plot_ly(stocksPivot, x = ~date, y = ~price, color = ~index, 
+              type = "scatter", mode = "lines")
+fig = fig %>%
+      layout(title = 'Stock Price of 4 Big Tech Companies in 2020', 
+             xaxis = list(title = 'Date'), 
+             yaxis = list(title = 'Close Price ($)'))
+```
+
+***
+
+```{r}
+fig
+```
+
+
