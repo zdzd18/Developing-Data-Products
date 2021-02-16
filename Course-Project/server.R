@@ -61,7 +61,8 @@ shinyServer(function(input, output) {
     output$desc <- renderText({
         desc = 'This application collects the stock price of 4 Big Tech 
         Companies in 2020, including Apple, Facebook, Google and Tesla. 
-        There are three tabs in the main panel. The first one shows the  
+        In the sidebar, you can select the stock that you are interested 
+        in. The main panel contains three tabs. The first one shows the  
         stock chart of selected company. The second one gives you more 
         detailed information. This last tab is associated supporting 
         documentation to help you get started using the application. '
