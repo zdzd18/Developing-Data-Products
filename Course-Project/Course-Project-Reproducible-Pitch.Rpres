@@ -4,7 +4,7 @@ author: Di Zhu
 date: 2/15/2021
 autosize: true
 
-Stock Price of 4 Big Tech Companies in 2020
+Stock Price of 4 Big Tech Companies
 ========================================================
 
 This application collects the stock price of 4 Big Tech Companies in 2020, including Apple, Facebook, Google and Tesla. In the sidebar, you can select the stock that you are interested in. The main panel contains three tabs.  
@@ -21,7 +21,7 @@ The links to the ui.R and server.R:
 Load The data and Create The Data Frame 
 ========================================================
 
-The stock data is collected from Yahoo Finance and stored in the stocks data frame. 
+#### The stock data is collected from Yahoo Finance and stored in the stocks data frame. 
 
 ```{r, echo = FALSE, message = FALSE, results = 'hide'}
 library(quantmod)
@@ -52,13 +52,14 @@ head(stocks)
 Tab 1 Stock Chart
 ========================================================
 
-The first tab shows the stock chart of the selected company. Suppose the user selects AAPL, the following plot will be displayed. 
+#### The first tab shows the stock chart of the selected company. Suppose the user selects AAPL, the following plot will be displayed. 
 
 ![](Tab 1.png)
 
 Tab 2 Details 
 ========================================================
-The second tab gives more details of the selected stock, including the highest and lowest close price in the year. 
+
+#### The second tab gives more details of the selected stock, including the highest and lowest close price in the year. 
 
 ![](Tab 2.png)
 
